@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "mobileApp",
-    "slug": "mobileApp",
+    "name": "Versant",
+    "slug": "versant-mobile-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/2x/VersantLogo@2x.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/2x/VersantSplashText@2x.png",

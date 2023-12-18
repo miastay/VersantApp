@@ -9,7 +9,8 @@ const VSChipAuthorListText = ({children}) => {
 
     function truncateAuthorList(str) {
         if(!str) return "";
-        return str.split(',').slice(0, 3).join(', ') + ' et al.'
+        let split = str.split(',')
+        return split.slice(0, 3).join(', ') + (split.length > 3 ? ' et. al.' : '')
     }
 
     return (

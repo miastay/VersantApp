@@ -1,9 +1,9 @@
 import { StyleSheet, Text } from 'react-native';
 
 
-const VSBodyText = ({children, size}) => {
+const VSBodyText = ({children, size, color, styled}) => {
     return (
-        <Text style={{...styles.text, fontSize: size}}>{children}</Text>
+        <Text style={{...styles.text, fontSize: size, color: color, ...styled}}>{children}</Text>
     )
 }
 

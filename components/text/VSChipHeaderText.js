@@ -24,7 +24,9 @@ const styles = StyleSheet.create({
         fontWeight: 900,
         letterSpacing: -1,
         color: "black",
-        fontFamily: "DMSans-Black"
+        fontFamily: "DMSans-Black",
+        marginTop: 2,
+        lineHeight: 30
     },
 });
 

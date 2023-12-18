@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, UIManager } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 import { palette } from './assets/palette';
 
@@ -13,7 +13,16 @@ import Home from './views/home';
 import VSHeaderText from './components/text/VSHeaderText';
 import VSArticleView from './views/VSArticleView';
 
-const Stack = createNativeStackNavigator();
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import VSHomeView from './views/VSHomeView';
+import VSSearchView from './views/VSSearchView';
+
+import { FontAwesome5 } from '@expo/vector-icons'; 
+import VSProfileView from './views/VSProfileView';
+
+
+const Tab = createBottomTabNavigator();
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
@@ -41,25 +50,30 @@ export default function App() {
     //setTimeout(SplashScreen.hideAsync, 2000);
     if(!fontsLoaded) return false;
 
+    if (
+        Platform.OS === 'android' &&
+        UIManager.setLayoutAnimationEnabledExperimental
+      ) {
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={
-                    {
-                        headerStyle: styles.stack, 
-                        headerTitle: (props) => <VSHeaderText {...props} />,
-                        headerRight: () => (
-                            <Image
-                                source={require('./assets/SVG/Search.svg')}
-                            />
-                        ),
-                        headerBackTitleVisible: false,
-                        headerTintColor: "white"
-                    }
-                }>
-                <Stack.Screen name="Versant" component={Home}/>
-                <Stack.Screen name="Article" component={VSArticleView}/>
-                <Stack.Screen name="Category" component={VSArticleView}/>
-            </Stack.Navigator>
+            <Tab.Navigator screenOptions={{ 
+                headerShown: false, 
+                tabBarStyle: {backgroundColor: palette.lightgray}, 
+                tabBarShowLabel: false,
+            }}>
+                <Tab.Screen name="Home" component={VSHomeView} options={{tabBarIcon: ({ focused }) => (
+                    focused ? <FontAwesome5 name="home" size={24} color="black" /> : <FontAwesome5 name="home" size={24} color={palette.medgray} />
+                )}}/>
+                <Tab.Screen name="VSSearch" component={VSSearchView} options={{tabBarIcon: ({ focused }) => (
+                    focused ? <FontAwesome5 name="search" size={24} color="black" /> : <FontAwesome5 name="search" size={24} color={palette.medgray} />
+                )}}/>
+                <Tab.Screen name="VSUser" component={VSProfileView} options={{tabBarIcon: ({ focused }) => (
+                    focused ? <FontAwesome5 name="user-alt" size={24} color="black" /> : <FontAwesome5 name="user-alt" size={24} color={palette.medgray} />
+                )}}/>
+            </Tab.Navigator>
         </NavigationContainer>
     );
 }
