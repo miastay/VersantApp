@@ -2,17 +2,23 @@ import { FlatList, StyleSheet, View, Text } from 'react-native';
 import { palette } from '../assets/palette';
 import VSBodyText from '../components/text/VSBodyText';
 import VSChipHeaderText from '../components/text/VSChipHeaderText';
+import VSArticleChip from '../components/VSArticleChip';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useEffect, useRef } from 'react';
 
 
 const VSSearchResultItem = ({data, navigation}) => {
     return (
         <View style={styles.item}>
-            <VSBodyText size={20}>{data.scholar_id}aaa</VSBodyText>
+            <VSBodyText size={20}>{JSON.stringify(data.id)}</VSBodyText>
+            <VSBodyText size={20}>{JSON.stringify(data.title)}</VSBodyText>
+            <VSBodyText size={20}>{JSON.stringify(data.title)}</VSBodyText>
         </View>
     )
 }
 
 const VSSearchResultAuthorItem = ({data, navigation}) => {
+
     return (
         <View style={styles.item}>
             <Text style={styles.item.header}>{data.name}</Text>
@@ -34,24 +40,29 @@ const VSSearchResultAuthorItem = ({data, navigation}) => {
 
 const VSSearchResultsView = ({data, navigation}) => {
 
-    //if(!data) return false;
-    console.log(data)
+    let listRef = useRef(null)
+
+    useEffect(() => {
+        listRef.current.scrollToOffset({ offset: 0, animated: true })
+    }, [data])
 
     return (
-        <View style={styles.view}>
-            <FlatList style={styles.list} data={data} keyExtractor={item => item.scholar_id} 
+        data && 
+        <GestureHandlerRootView style={styles.view}>
+            <FlatList style={styles.list} data={data} keyExtractor={item => item.id} 
+                ref={listRef}
                 renderItem={
                     ({item}) => {
                         switch(item.container_type) {
                             case "Author": { return <VSSearchResultAuthorItem data={item} navigation={navigation}/>}
-                            default: { return <VSSearchResultItem data={item} navigation={navigation}/>}
+                            default: { return <VSArticleChip data={item} navigation={navigation}/>}
                         }
                     }
                 }
                 onEndThreshold={0}
             >
             </FlatList>
-        </View>
+        </GestureHandlerRootView>
     )
 }
 

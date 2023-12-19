@@ -12,9 +12,9 @@ const VSChipCategoryText = ({children, navigation}) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 15,
+        fontSize: 13,
         fontWeight: 900,
-        letterSpacing: -1,
+        letterSpacing: -0.5,
         color: palette.text.category,
         fontFamily: "DMSans-Black",
         textTransform: "uppercase"

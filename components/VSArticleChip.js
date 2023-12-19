@@ -38,7 +38,7 @@ const VSArticleChip = ({children, data, navigation}) => {
     renderLeftActions = (progress, dragX) => {
         trans = dragX.interpolate({
           inputRange: [0, width],
-          outputRange: [(-1*width / 4), (width / 3)],
+          outputRange: [-20, (2 * width / 7)],
         });
         opaq = progress.interpolate({
             inputRange: [0, 50, 100],
@@ -178,9 +178,8 @@ const styles = StyleSheet.create({
     },
     innerLeft: {
         flexDirection: "column",
-        borderColor: "red",
-        borderWidth: 2,
-        alignItems: 'center'
+        alignItems: 'center',
+        gap: 3
     },
     shadow: {
         shadowColor: "#222222",

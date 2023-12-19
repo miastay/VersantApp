@@ -3,6 +3,7 @@ import Home from './home';
 import VSArticleView from './VSArticleView';
 import { palette } from '../assets/palette';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { TransitionPresets } from '@react-navigation/stack';
 import VSHeaderText from '../components/text/VSHeaderText';
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,9 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     stack: {
-      backgroundColor: palette.green,
+        backgroundColor: palette.green,
+        borderBottomColor: palette.lightgreen,
+        borderBottomWidth: 2
     }
 });
 

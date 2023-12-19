@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 const VSChipHeaderText = ({children}) => {
 
-    const maxChipHeaderLength = 150;
+    const maxChipHeaderLength = 200;
     const [truncatedText, setTruncatedText] = useState(children.length > maxChipHeaderLength ? truncateToSpace(children) + "..." : children)
 
 
@@ -20,13 +20,13 @@ const VSChipHeaderText = ({children}) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 25,
+        fontSize: 22,
         fontWeight: 900,
         letterSpacing: -1,
         color: "black",
         fontFamily: "DMSans-Black",
         marginTop: 2,
-        lineHeight: 30
+        lineHeight: 26
     },
 });
 

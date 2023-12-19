@@ -40,7 +40,8 @@ const VSSearchRecommendations = ({children, setCurrentSearch}) => {
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        padding: 10
     },
     item: {
         marginBottom: 5,

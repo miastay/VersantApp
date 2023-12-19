@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 import { palette } from '../assets/palette';
-
+import { Ionicons } from '@expo/vector-icons';
 
 const VSSearchBar = ({children, setCurrentSearch, currentSearch, runSearch}) => {
 
@@ -20,6 +20,7 @@ const VSSearchBar = ({children, setCurrentSearch, currentSearch, runSearch}) => 
                 onChangeText={handleChangeText}
                 onBlur={handleBlur}
                 value={currentSearch}
+                clearButtonMode={"always"}
             />
         </View>
     )

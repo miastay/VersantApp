@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import VSArticleChip from '../components/VSArticleChip';
 import VSBodyText from '../components/text/VSBodyText';
 import { palette } from '../assets/palette';
+import { pmcSearchToXML } from '../api/entrez';
 
 const VSInfiniteScroll = ({content, children, navigation}) => {
 
@@ -18,14 +19,14 @@ const VSInfiniteScroll = ({content, children, navigation}) => {
 
     data = [
         { 
-            article_id: 0,
+            id: 0,
             category: "Pediatrics",
             header: "Tight Glycemic Control, Inflammation, and the ICU: Evidence for Heterogeneous Treatment Effects in Two Randomized Controlled Trials",
             authors: "Matt S. Zinter, Daniela Markovic, Lisa A. Asaro, Vinay M. Nadkarni, Patrick S. McQuillen, Pratik Sinha, Michael A. Matthay,Marc G. Jeschke, Michael S. D. Agus, and Anil Sapru",
             abstract: "Among critically ill patients, hyperglycemia is associated with insulin resistance, inflammation, endothelial activation, and mortality (1, 2). Although early trials of tight glycemic control (TGC) in critically ill patients showed significant clinical benefit, later trials have shown conflicting results (3, 4). This may be due to a variety of cohort compositions, different tested glucose targets, narrowing glycemic differences between treated and control patients, and other factors which have together led to difficulty in selecting ideal candidates for"
         },
         { 
-            article_id: 1,
+            id: 1,
             category: "Machine Learning",
             header: "Machine Learning Classifier Models Can Identify Acute Respiratory Distress Syndrome Phenotypes Using Readily Available Clinical Data ",
             authors: "Pratik Sinha, Matthew M. Churpek, and Carolyn S. Calfee",
@@ -33,22 +34,23 @@ const VSInfiniteScroll = ({content, children, navigation}) => {
         },
     ]
 
-    const handleLoadMore = () => {
+    const handleLoadMore = async () => {
         console.log("reached end");
-        // data.push(
-        //     { 
-        //         article_id: data.length,
-        //         category: "Pediatrics",
-        //         header: "Tight Glycemic Control, Inflammation, and the ICU: Evidence for Heterogeneous Treatment Effects in Two Randomized Controlled Trials",
-        //         authors: "Matt S. Zinter, Daniela Markovic, Lisa A. Asaro, Vinay M. Nadkarni, Patrick S. McQuillen, Pratik Sinha, Michael A. Matthay,Marc G. Jeschke, Michael S. D. Agus, and Anil Sapru",
-        //         abstract: "Among critically ill patients, hyperglycemia is associated with insulin resistance, inflammation, endothelial activation, and mortality (1, 2). Although early trials of tight glycemic control (TGC) in critically ill patients showed significant clinical benefit, later trials have shown conflicting results (3, 4). This may be due to a variety of cohort compositions, different tested glucose targets, narrowing glycemic differences between treated and control patients, and other factors which have together led to difficulty in selecting ideal candidates for"
-        //     },
-        // )
+        data.push(
+            { 
+                id: data.length,
+                category: "Pediatrics",
+                header: "Tight Glycemic Control, Inflammation, and the ICU: Evidence for Heterogeneous Treatment Effects in Two Randomized Controlled Trials",
+                authors: "Matt S. Zinter, Daniela Markovic, Lisa A. Asaro, Vinay M. Nadkarni, Patrick S. McQuillen, Pratik Sinha, Michael A. Matthay,Marc G. Jeschke, Michael S. D. Agus, and Anil Sapru",
+                abstract: "Among critically ill patients, hyperglycemia is associated with insulin resistance, inflammation, endothelial activation, and mortality (1, 2). Although early trials of tight glycemic control (TGC) in critically ill patients showed significant clinical benefit, later trials have shown conflicting results (3, 4). This may be due to a variety of cohort compositions, different tested glucose targets, narrowing glycemic differences between treated and control patients, and other factors which have together led to difficulty in selecting ideal candidates for"
+            },
+        )
+        //console.log(xml["eSearchResult"][IdList])
     }
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList style={styles.view} data={data} keyExtractor={item => item.article_id} 
+            <FlatList style={styles.view} data={data} keyExtractor={item => item.id} 
                 refreshControl={
                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={palette.lightgreen} colors={[palette.lightgreen]}/>
                 }

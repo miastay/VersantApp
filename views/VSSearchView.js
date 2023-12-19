@@ -6,8 +6,11 @@ import VSHeaderText from '../components/text/VSHeaderText';
 import VSSearchRecommendations from '../components/VSSearchRecommendations';
 import { useState } from 'react';
 import VSSearchResultsView from './VSSearchResultsView';
+import { pmcSearchToArticleXML, pmcSearchToXML } from '../api/entrez';
+import VSArticleView from './VSArticleView';
+import { BlurView } from 'expo-blur';
 
-const VSSearch = ({navigator}) => {
+const VSSearch = ({navigation}) => {
 
     const [currentSearch, setCurrentSearch] = useState('');
     const [displayResults, setDisplayResults] = useState(false);
@@ -79,43 +82,50 @@ const VSSearch = ({navigator}) => {
 
     const runSearch = async () => {
 
-        let data = {
-            query: currentSearch,
-        }
+        pmcSearchToArticleXML(currentSearch)
+        .then((results) => {
+            console.log(results[0])
+            data = results.map((item) => {
+                return {
+                    "id": item["Id"],
+                    "header": item["Item"][5],
+                    "authors": Array(item["Item"][3]["Item"]).join(', '),
+                    "category": "Article",
+                }
+            })
+            setSearchData(data)
+            setDisplayResults(true)
+        })
 
-        fetch(`http://192.168.99.113:8000/api/author`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            setSearchData(JSON.parse(data));
-            setDisplayResults(true);
-            console.log(data);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+
+        // pmcSearchToXML(encodeURI(currentSearch)).then((xml) => {
+        //     idList = xml["eSearchResult"]["IdList"]["Id"]
+        //     data = idList.map((item) => {
+        //         return {
+        //             "name": item,
+        //             "id": item
+        //         }
+        //     })
+        //     setSearchData(idList)
+        //     setDisplayResults(true)
+        //     console.log(idList)
+        // })
 
     }
 
 
     return (
-        // !displayResults ? (
-        //     <View style={styles.view}>
-        //         <VSSearchBar setCurrentSearch={setCurrentSearch} currentSearch={currentSearch} runSearch={runSearch}/>
-        //         <VSSearchRecommendations setCurrentSearch={setCurrentSearch}/>
-        //     </View>
-        // ) : (
-            <View style={styles.view}>
+        <View style={styles.view}>
+            <BlurView intensity={10} tint="light" style={styles.top}>
                 <VSSearchBar setCurrentSearch={setCurrentSearch} currentSearch={currentSearch} runSearch={runSearch}/>
-                <VSSearchResultsView data={Object.values(dummyData)} navigator={navigator} />
-            </View>
-        // )
-    )
+            </BlurView>
+            {
+                !displayResults ? <VSSearchRecommendations setCurrentSearch={setCurrentSearch}/>
+                : <VSSearchResultsView data={Object.values(searchData)} navigation={navigation} />
+            }
+            
+        </View>
+)
 }
 
 const Stack = createNativeStackNavigator();
@@ -135,6 +145,7 @@ const VSSearchView = ({children}) => {
             }
         }>
             <Stack.Screen name="Search" component={VSSearch}/>
+            <Stack.Screen name="Article" component={VSArticleView}/>
         </Stack.Navigator>
     )
 }
@@ -142,13 +153,16 @@ const VSSearchView = ({children}) => {
 const styles = StyleSheet.create({
     view: {
         flex: 1,
-        padding: 20
     },
     header: {
         flex: 1,
         alignSelf: "stretch",
         justifyContent: "flex-end",
         padding: 10,
+    },
+    top: {
+        padding: 10,
+        paddingBottom: 0,
     },
     content: {
         flex: 6,

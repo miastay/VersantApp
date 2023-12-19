@@ -15,7 +15,6 @@ const VSProfile = ({children}) => {
     
 }
 
-
 const Stack = createNativeStackNavigator();
 const VSProfileView = ({children}) => {
 
