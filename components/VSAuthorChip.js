@@ -1,4 +1,4 @@
-import { Animated, LayoutAnimation, StyleSheet, View } from 'react-native';
+import { Animated, LayoutAnimation, StyleSheet, Text, View } from 'react-native';
 import VSChipHeaderText from './text/VSChipHeaderText';
 import VSChipCategoryText from './text/VSChipCategoryText';
 import VSChipAuthorListText from './text/VSChipAuthorListText';
@@ -11,7 +11,7 @@ import { palette } from '../assets/palette';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { useWindowDimensions } from 'react-native';
 
-const VSArticleChip = ({children, data, navigation}) => {
+const VSAuthorChip = ({children, data, navigation}) => {
 
     translateX = new Animated.Value(0);
     scaleY = new Animated.Value(0);
@@ -106,10 +106,10 @@ const VSArticleChip = ({children, data, navigation}) => {
                     <GestureDetector gesture={tap}>
                         <View style={styles.content}>
                             <View style={styles.header}>
-                                {data.header && <VSChipHeaderText>{data.header}</VSChipHeaderText>}
+                                {data.name && <VSChipHeaderText>{data.name}</VSChipHeaderText>}
                             </View>
-                            <View style={styles.authors}>
-                                {data.authors && <VSChipAuthorListText>{data.authors}</VSChipAuthorListText>}
+                            <View style={styles.affiliations}>
+                                {data.affiliation && <Text style={styles.affiliations.text}>{data.affiliation}</Text>}
                             </View>
                             <View>
                                 {data.abstract && <VSAbstractText>{data.abstract}</VSAbstractText>}
@@ -149,13 +149,18 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
     },
     header: {
-        marginBottom: 2
     },
     category: {
 
     },
-    authors: {
-        marginBottom: 20
+    affiliations: {
+        marginBottom: 20,
+        text: {
+            fontSize: 15,
+            fontFamily: "DMSansItalic",
+            fontWeight: 500,
+            color: palette.green
+        }
     },
     leftAction: {
         width: "100%",
@@ -192,4 +197,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default VSArticleChip;
+export default VSAuthorChip;

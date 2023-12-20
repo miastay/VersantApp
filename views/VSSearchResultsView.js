@@ -5,6 +5,7 @@ import VSChipHeaderText from '../components/text/VSChipHeaderText';
 import VSArticleChip from '../components/VSArticleChip';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useEffect, useRef } from 'react';
+import VSAuthorChip from '../components/VSAuthorChip';
 
 
 const VSSearchResultItem = ({data, navigation}) => {
@@ -18,6 +19,8 @@ const VSSearchResultItem = ({data, navigation}) => {
 }
 
 const VSSearchResultAuthorItem = ({data, navigation}) => {
+
+    console.log(data)
 
     return (
         <View style={styles.item}>
@@ -53,8 +56,9 @@ const VSSearchResultsView = ({data, navigation}) => {
                 ref={listRef}
                 renderItem={
                     ({item}) => {
-                        switch(item.container_type) {
-                            case "Author": { return <VSSearchResultAuthorItem data={item} navigation={navigation}/>}
+                        switch(item.category) {
+                            case "author": { return <VSAuthorChip data={item} navigation={navigation}/>}
+                            case "article":
                             default: { return <VSArticleChip data={item} navigation={navigation}/>}
                         }
                     }

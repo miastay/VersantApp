@@ -6,7 +6,7 @@ import VSHeaderText from '../components/text/VSHeaderText';
 import VSSearchRecommendations from '../components/VSSearchRecommendations';
 import { useState } from 'react';
 import VSSearchResultsView from './VSSearchResultsView';
-import { pmcSearchToArticleXML, pmcSearchToXML } from '../api/entrez';
+import { extractQueryType, pmcSearchResults, pmcSearchToArticleXML, pmcSearchToXML } from '../api/entrez';
 import VSArticleView from './VSArticleView';
 import { BlurView } from 'expo-blur';
 
@@ -82,34 +82,11 @@ const VSSearch = ({navigation}) => {
 
     const runSearch = async () => {
 
-        pmcSearchToArticleXML(currentSearch)
+        pmcSearchResults(currentSearch)
         .then((results) => {
-            console.log(results[0])
-            data = results.map((item) => {
-                return {
-                    "id": item["Id"],
-                    "header": item["Item"][5],
-                    "authors": Array(item["Item"][3]["Item"]).join(', '),
-                    "category": "Article",
-                }
-            })
-            setSearchData(data)
+            setSearchData(results)
             setDisplayResults(true)
         })
-
-
-        // pmcSearchToXML(encodeURI(currentSearch)).then((xml) => {
-        //     idList = xml["eSearchResult"]["IdList"]["Id"]
-        //     data = idList.map((item) => {
-        //         return {
-        //             "name": item,
-        //             "id": item
-        //         }
-        //     })
-        //     setSearchData(idList)
-        //     setDisplayResults(true)
-        //     console.log(idList)
-        // })
 
     }
 

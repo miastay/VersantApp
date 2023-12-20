@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 import { useState } from 'react';
 
-const VSChipHeaderText = ({children}) => {
+const VSChipHeaderText = ({children, addStyle}) => {
 
     const maxChipHeaderLength = 200;
     const [truncatedText, setTruncatedText] = useState(children.length > maxChipHeaderLength ? truncateToSpace(children) + "..." : children)
@@ -14,7 +14,7 @@ const VSChipHeaderText = ({children}) => {
 
 
     return (
-        <Text style={styles.text}>{truncatedText}</Text>
+        <Text style={{ ...styles.text, ...addStyle}}>{truncatedText}</Text>
     )
 }
 
