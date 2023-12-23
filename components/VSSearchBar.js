@@ -2,14 +2,17 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { palette } from '../assets/palette';
 import { Ionicons } from '@expo/vector-icons';
 
-const VSSearchBar = ({children, setCurrentSearch, currentSearch, runSearch}) => {
+const VSSearchBar = ({children, setCurrentSearch, currentSearch, runSearch, setDisplayResults}) => {
 
     const handleChangeText = async (e) => {
         setCurrentSearch(e)
+        if(e === "") {
+            setDisplayResults(false)
+        }
     }
 
     const handleBlur = async (e) => {
-        runSearch(e)
+        runSearch(e.nativeEvent.text)
     }
 
     return (

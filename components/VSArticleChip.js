@@ -84,7 +84,7 @@ const VSArticleChip = ({children, data, navigation}) => {
     };
 
     const tap = Gesture.Tap().maxDeltaX(30).onStart(() => {
-        navigation.navigate('Article')
+        navigation.navigate('Article', data)
     })
 
     const handleSwipeOpen = () => {

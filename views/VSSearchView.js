@@ -17,72 +17,9 @@ const VSSearch = ({navigation}) => {
     const [searchData, setSearchData] = useState(null);
 
 
-    const dummyData = {
-        "1KfHz7YAAAAJ": {
-            "affiliation": "associate professor, Tsinghua University", 
-            "citedby": 34, 
-            "container_type": "Author", 
-            "email_domain": "@tsinghua.edu.cn", 
-            "filled": [], "interests": ["law"], 
-            "name": "xinjun zhang", 
-            "scholar_id": "1KfHz7YAAAAJ", 
-            "source": "SEARCH_AUTHOR_SNIPPETS", 
-            "url_picture": "https://scholar.google.com/citations?view_op=medium_photo&user=1KfHz7YAAAAJ"
-        }, 
-        "INMp_3EAAAAJ": {
-            "affiliation": "Merck", 
-            "citedby": 1406, 
-            "container_type": "Author", 
-            "email_domain": "", 
-            "filled": [], 
-            "interests": ["Retina", "Development", "Neuronal Circuitry", "Stem Cell"], 
-            "name": "Xin-Jun Zhang", 
-            "scholar_id": "INMp_3EAAAAJ", 
-            "source": "SEARCH_AUTHOR_SNIPPETS", 
-            "url_picture": "https://scholar.google.com/citations?view_op=medium_photo&user=INMp_3EAAAAJ"
-        }, 
-        "XYT3KvEAAAAJ": {
-            "affiliation": "Boston Children's Hospital, Harvard Medical School", 
-            "citedby": 3600, 
-            "container_type": "Author", 
-            "email_domain": "@childrens.harvard.edu", 
-            "filled": [], 
-            "interests": ["Wnt Signal Pathway", "Development and Diseases."], 
-            "name": "Zhang Xinjun", 
-            "scholar_id": "XYT3KvEAAAAJ", 
-            "source": "SEARCH_AUTHOR_SNIPPETS", 
-            "url_picture": "https://scholar.google.com/citations?view_op=medium_photo&user=XYT3KvEAAAAJ"
-        }, 
-        "ZPtvttkAAAAJ": {
-            "affiliation": "Assistant Professor, University of Michigan, Ann Arbor",
-            "citedby": 568, 
-            "container_type": "Author", 
-            "email_domain": "@med.umich.edu", 
-            "filled": [], 
-            "interests": ["Population Genetics", "Human Evolution", "Computational Biology", "Machine Learning"], 
-            "name": "Xinjun Zhang", 
-            "scholar_id": "ZPtvttkAAAAJ", 
-            "source": "SEARCH_AUTHOR_SNIPPETS", 
-            "url_picture": "https://scholar.google.com/citations?view_op=medium_photo&user=ZPtvttkAAAAJ"
-        }, 
-        "sfKGE2QAAAAJ": {
-            "affiliation": "Indiana University Bloomington", 
-            "citedby": 1942, 
-            "container_type": "Author", 
-            "email_domain": "@indiana.edu", 
-            "filled": [], 
-            "interests": [], 
-            "name": "Xinjun Zhang", 
-            "scholar_id": "sfKGE2QAAAAJ", 
-            "source": "SEARCH_AUTHOR_SNIPPETS", 
-            "url_picture": "https://scholar.google.com/citations?view_op=medium_photo&user=sfKGE2QAAAAJ"
-        }
-    }
+    const runSearch = async (str) => {
 
-
-    const runSearch = async () => {
-
-        pmcSearchResults(currentSearch)
+        pmcSearchResults(str)
         .then((results) => {
             setSearchData(results)
             setDisplayResults(true)
@@ -90,19 +27,23 @@ const VSSearch = ({navigation}) => {
 
     }
 
+    const updateSearchFromRecommendations = (str) => {
+        setCurrentSearch(str);
+        runSearch(str);
+    }
+
 
     return (
         <View style={styles.view}>
             <BlurView intensity={10} tint="light" style={styles.top}>
-                <VSSearchBar setCurrentSearch={setCurrentSearch} currentSearch={currentSearch} runSearch={runSearch}/>
+                <VSSearchBar setCurrentSearch={setCurrentSearch} currentSearch={currentSearch} runSearch={runSearch} setDisplayResults={setDisplayResults}/>
             </BlurView>
             {
-                !displayResults ? <VSSearchRecommendations setCurrentSearch={setCurrentSearch}/>
+                !displayResults ? <VSSearchRecommendations setCurrentSearch={updateSearchFromRecommendations}/>
                 : <VSSearchResultsView data={Object.values(searchData)} navigation={navigation} />
             }
-            
         </View>
-)
+    )
 }
 
 const Stack = createNativeStackNavigator();

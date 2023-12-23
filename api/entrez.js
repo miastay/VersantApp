@@ -6,7 +6,7 @@ const parser = new XMLParser();
 
 
 export function extractQueryType(xml) {
-    //xml = "sapru, anil[Author] AND (\"gene expression profiling\"[MeSH Terms] OR (\"gene\"[All Fields] AND \"expression\"[All Fields] AND \"profiling\"[All Fields]) OR \"gene expression profiling\"[All Fields] OR \"transcriptomics\"[All Fields] OR \"transcriptom\"[All Fields] OR \"transcriptomal\"[All Fields] OR \"transcriptome\"[MeSH Terms] OR \"transcriptome\"[All Fields] OR \"transcriptomes\"[All Fields] OR \"transcriptomic\"[All Fields] OR \"transcriptomically\"[All Fields])"
+
     str = String(xml["QueryTranslation"])
     console.log(str)
     queryTypeList = []
@@ -19,9 +19,7 @@ export function extractQueryType(xml) {
     }
     
     return queryTypeList;
-    // if(str.includes("[Author]") || str.contains("[Investigator]")) {
-    //     return "author"
-    // }
+
 }
 
 
@@ -30,12 +28,6 @@ export async function pmcSearchToXML(query, start = 0) {
     .then((data) => data.text())
     .then((text) => {
         xml = parser.parse(text);
-        // data = {
-        //     count: xml["Count"],
-        //     count: xml["Count"],
-        //     count: xml["Count"],
-        //     count: xml["Count"],
-        // }
         res = xml["eSearchResult"]
         queryType = extractQueryType(res)
         return res
@@ -113,6 +105,26 @@ export async function pmcSearchResults(query) {
         results = [...results, res].flat()
     })
     return results;
+}
+
+export async function pmcIdToArticleFetch(id) {
+
+    console.log(id)
+
+    query = id
+    if(id.length) query = id.join(',')
+    return fetch(root + `efetch.fcgi?db=pubmed&id=${encodeURI(query)}`)
+    .then((data) => data.text())
+    .then((text) => {
+        xml = parser.parse(text);
+        res = xml["PubmedArticleSet"]["PubmedArticle"]["MedlineCitation"]["Article"]
+        console.log(res)
+        return res
+    })
+    .catch((err) => {
+        console.log(err)
+    })
+
 }
 
 

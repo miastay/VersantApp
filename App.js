@@ -39,6 +39,7 @@ export default function App() {
             'DMSans-Black': require('./assets/fonts/DMSans-Black.ttf'),
             'DMSans': require('./assets/fonts/DMSans.ttf'),
             'DMSansItalic': require('./assets/fonts/DMSansItalic.ttf'),
+            "RobotoSlab": require('./assets/fonts/RobotoSlab.ttf'),
         });
         console.log("loaded fonts")
     }

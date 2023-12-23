@@ -16,6 +16,7 @@ const VSSearchRecommendations = ({children, setCurrentSearch}) => {
         }
     ]
 
+    //onPress={() => {setCurrentSearch(item)}}
 
     return (
         <View style={styles.view}>
@@ -41,20 +42,22 @@ const styles = StyleSheet.create({
     view: {
         flex: 1,
         justifyContent: "flex-start",
-        padding: 10
+        padding: 20
     },
     item: {
         marginBottom: 5,
         padding: 5,
+        paddingLeft: 15,
     },
     title: {
         fontSize: 15,
     },
     header: {
         fontSize: 18,
-        color: palette.medgray,
+        color: palette.lightgreen,
+        fontFamily: "DMSans-Bold",
         marginBottom: 10,
-        marginTop: 20
+        marginTop: 10
     }
 });
 

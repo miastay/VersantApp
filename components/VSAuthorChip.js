@@ -22,23 +22,11 @@ const VSAuthorChip = ({children, data, navigation}) => {
     const [addedToReadingList, setAddedToReadingList] = useState(false);
 
     chipRef = useRef(null)
-    const [measure, setMeasure] = useState(null);
-
-    function updateMeasure() {
-        console.log("change")
-        if (chipRef.current) {
-            chipRef.current.measure(
-              (left, top, width, height) => {
-                setMeasure({left, top, width, height});
-              },
-            );
-        }
-    }
 
     renderLeftActions = (progress, dragX) => {
         trans = dragX.interpolate({
-          inputRange: [0, width],
-          outputRange: [-20, (2 * width / 7)],
+            inputRange: [0, width],
+            outputRange: [-20, (2 * width / 7)],
         });
         opaq = progress.interpolate({
             inputRange: [0, 50, 100],
@@ -109,7 +97,7 @@ const VSAuthorChip = ({children, data, navigation}) => {
                                 {data.name && <VSChipHeaderText>{data.name}</VSChipHeaderText>}
                             </View>
                             <View style={styles.affiliations}>
-                                {data.affiliation && <Text style={styles.affiliations.text}>{data.affiliation}</Text>}
+                                {data.affiliation && <VSChipAuthorListText style={styles.affiliations.text}>{data.affiliation}</VSChipAuthorListText>}
                             </View>
                             <View>
                                 {data.abstract && <VSAbstractText>{data.abstract}</VSAbstractText>}
@@ -159,7 +147,7 @@ const styles = StyleSheet.create({
             fontSize: 15,
             fontFamily: "DMSansItalic",
             fontWeight: 500,
-            color: palette.green
+            color: palette.lightgreen
         }
     },
     leftAction: {
