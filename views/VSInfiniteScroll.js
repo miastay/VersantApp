@@ -5,6 +5,7 @@ import VSArticleChip from '../components/VSArticleChip';
 import VSBodyText from '../components/text/VSBodyText';
 import { palette } from '../assets/palette';
 import { pmcSearchToXML } from '../api/entrez';
+import { getUser, getUsers } from '../api/firebase';
 
 const VSInfiniteScroll = ({content, children, navigation}) => {
 
@@ -12,6 +13,7 @@ const VSInfiniteScroll = ({content, children, navigation}) => {
 
     const onRefresh = useCallback(() => {
         setRefreshing(true);
+        getUser('akiak', false).then((user) => console.log(JSON.stringify(user)))
         setTimeout(() => {
         setRefreshing(false);
         }, 1000);
